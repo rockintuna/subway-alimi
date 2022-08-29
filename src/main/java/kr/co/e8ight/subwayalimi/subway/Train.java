@@ -20,8 +20,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Train {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     private String subwayId;
     private String subwayName;
     private String currentStationId;
@@ -45,17 +44,17 @@ public class Train {
 
     private static Train from(RealtimePosition realtimePosition) {
         return Train.builder()
-                .id(Long.getLong(realtimePosition.getTrainNo()))
+                .id(Integer.parseInt(realtimePosition.getTrainNo()))
                 .subwayId(realtimePosition.getSubwayId())
                 .subwayName(realtimePosition.getSubwayNm())
                 .currentStationId(realtimePosition.getStatnId())
                 .currentStationName(realtimePosition.getStatnNm())
                 .lastReceivedDate(LocalDate.parse(realtimePosition.getLastRecptnDt(), DateTimeFormatter.ofPattern("yyyyMMdd")))
-                .receivedDateTime(LocalDateTime.parse(realtimePosition.getRecptnDt(), DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss")))
+                .receivedDateTime(LocalDateTime.parse(realtimePosition.getRecptnDt(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                 .direction(realtimePosition.getUpdnLine())
                 .lastStationId(realtimePosition.getStatnTid())
                 .lastStationName(realtimePosition.getStatnTnm())
-                .trainStatus(Integer.getInteger(realtimePosition.getTrainSttus()))
+                .trainStatus(Integer.parseInt(realtimePosition.getTrainSttus()))
                 .isExpress(realtimePosition.getDirectAt().equals("1"))
                 .isLast(realtimePosition.getLstcarAt().equals("1"))
                 .build();

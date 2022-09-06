@@ -1,11 +1,11 @@
-package kr.co.e8ight.subwayalimi.subway.dto;
+package kr.co.e8ight.subwayalimi.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class RealtimePosition {
+public class RealtimeTrainPosition {
     private String subwayId;
     private String subwayNm;
     private String statnId;

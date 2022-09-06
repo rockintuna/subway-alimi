@@ -15,4 +15,13 @@ public class StationInfo {
     private String stationEngName;
     @JsonProperty("LINE_NUM")
     private String lineName;
+    private String x;
+    private String y;
+    private String addressName;
+
+    public void setAddress(Address address) {
+        this.x = address.getX();
+        this.y = address.getY();
+        this.addressName = address.getAddressName();
+    }
 }

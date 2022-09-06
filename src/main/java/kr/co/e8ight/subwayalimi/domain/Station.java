@@ -32,11 +32,14 @@ public class Station {
         return stationList;
     }
 
-    private static Station from(StationInfo stationInfo) {
+    public static Station from(StationInfo stationInfo) {
         return Station.builder()
                 .id(Long.getLong(stationInfo.getStationId()))
                 .name(stationInfo.getStationName())
                 .lineName(stationInfo.getLineName())
+                .addressName(stationInfo.getAddressName())
+                .x(stationInfo.getX())
+                .y(stationInfo.getY())
                 .build();
     }
 }

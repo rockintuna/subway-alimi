@@ -1,4 +1,4 @@
-package kr.co.e8ight.subwayalimi.subway;
+package kr.co.e8ight.subwayalimi.domain;
 
 import lombok.*;
 
@@ -19,24 +19,24 @@ public class Station {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String route;
+    private String lineName;
     private String x;
     private String y;
-    public static List<Station> getListFrom(List<StationPosition> stationPositionList) {
+    private String addressName;
+
+    public static List<Station> getListFrom(List<StationInfo> stationInfoList) {
         List<Station> stationList = new ArrayList<>();
-        for (StationPosition stationPosition : stationPositionList) {
-            stationList.add(Station.from(stationPosition));
+        for (StationInfo stationInfo : stationInfoList) {
+            stationList.add(Station.from(stationInfo));
         }
         return stationList;
     }
 
-    private static Station from(StationPosition stationPosition) {
+    private static Station from(StationInfo stationInfo) {
         return Station.builder()
-                .id(Long.getLong(stationPosition.getStationId()))
-                .name(stationPosition.getStationName())
-                .route(stationPosition.getRoute())
-                .x(stationPosition.getX())
-                .y(stationPosition.getY())
+                .id(Long.getLong(stationInfo.getStationId()))
+                .name(stationInfo.getStationName())
+                .lineName(stationInfo.getLineName())
                 .build();
     }
 }

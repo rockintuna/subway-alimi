@@ -1,4 +1,4 @@
-package kr.co.e8ight.subwayalimi.subway.dto;
+package kr.co.e8ight.subwayalimi.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

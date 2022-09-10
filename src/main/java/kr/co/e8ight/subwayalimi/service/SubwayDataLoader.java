@@ -46,7 +46,10 @@ public class SubwayDataLoader {
             if ( stationInfo.getLineName().equals("우이신설경전철") ) {
                 lineName = "우이신설선";
             }
-            //todo 인천2호선 인천시청역 확인 필요
+            if ( stationInfo.getLineName().equals("인천2호선") &&
+             stationInfo.getStationName().equals("인천시청") ) {
+                lineName = "인천1호선";
+            }
 
             String fullUrl = LOCATION_SEARCH_JSON +
                     "?page=1" +

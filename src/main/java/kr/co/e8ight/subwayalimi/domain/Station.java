@@ -1,11 +1,14 @@
 package kr.co.e8ight.subwayalimi.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.hibernate.annotations.Type;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.Point;
+import org.locationtech.jts.io.ParseException;
+import org.locationtech.jts.io.WKTReader;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +23,11 @@ public class Station {
     private Long id;
     private String name;
     private String lineName;
+
+    @Column(columnDefinition = "geometry(Point,5181)")
+    @JsonIgnore
+    private Point point;
+
     private String x;
     private String y;
     private String addressName;
@@ -33,6 +41,14 @@ public class Station {
     }
 
     public static Station from(StationInfo stationInfo) {
+        Geometry geometry;
+        try {
+            WKTReader wktReader = new WKTReader();
+            geometry = wktReader.read("POINT(" + stationInfo.getX() + " " + stationInfo.getY() + ")");
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
         return Station.builder()
                 .id(Long.getLong(stationInfo.getStationId()))
                 .name(stationInfo.getStationName())
@@ -40,6 +56,7 @@ public class Station {
                 .addressName(stationInfo.getAddressName())
                 .x(stationInfo.getX())
                 .y(stationInfo.getY())
+                .point((Point) geometry)
                 .build();
     }
 }

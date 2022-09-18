@@ -1,9 +1,10 @@
 package kr.co.e8ight.subwayalimi.controller;
 
-import kr.co.e8ight.subwayalimi.service.SubwayService;
 import kr.co.e8ight.subwayalimi.domain.Station;
 import kr.co.e8ight.subwayalimi.domain.Train;
+import kr.co.e8ight.subwayalimi.service.SubwayService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.geo.Point;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,8 +15,13 @@ public class SubwayController {
     private final SubwayService subwayService;
 
     @GetMapping("/stations")
-    public List<Station> getSubwayStationReceived(@RequestAttribute("line") String lineName) {
-        return subwayService.getStationPositionInfo(lineName);
+    public List<Station> getSubwayStationReceived(@RequestParam("line") String lineName
+                                                  ,@RequestParam("x") Double x,
+                                                  @RequestParam("y") Double y,
+                                                  @RequestParam("radius") Double radius
+                                                  ) {
+//        return subwayService.getStationPositionInfo(lineName);
+        return subwayService.getStationPositionInfo(lineName, new Point(x,y), radius);
     }
 
     @GetMapping("/trains/{trainId}")
@@ -24,12 +30,12 @@ public class SubwayController {
     }
 
     @GetMapping("/trains")
-    public List<Train> getRealtimeTrainPositionList(@RequestAttribute("line") String lineName) {
+    public List<Train> getRealtimeTrainPositionList(@RequestParam("line") String lineName) {
         return subwayService.getRealtimeTrainPositionList(lineName);
     }
 
     @PatchMapping("/trains")
-    public void refreshRealtimeTrainPosition(@RequestAttribute("line") String lineName) {
+    public void refreshRealtimeTrainPosition(@RequestParam("line") String lineName) {
         subwayService.refreshRealtimeTrainPositions(lineName);
     }
 

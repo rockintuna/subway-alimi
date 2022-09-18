@@ -7,6 +7,7 @@ import kr.co.e8ight.subwayalimi.dto.RealtimeTrainPosition;
 import kr.co.e8ight.subwayalimi.repository.StationRepository;
 import kr.co.e8ight.subwayalimi.repository.TrainRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.geo.Point;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,11 +25,14 @@ public class SubwayService {
         this.stationRepository = stationRepository;
         this.subwayDataLoader = subwayDataLoader;
         this.trainrepository = trainrepository;
-        saveStationPositionInfo();
+//        saveStationPositionInfo();
     }
 
-    public List<Station> getStationPositionInfo(String lineName) {
-        return stationRepository.findAllByLineName(lineName);
+    public List<Station> getStationPositionInfo(String lineName, Point point, Double radius) {
+//    public List<Station> getStationPositionInfo(String lineName) {
+        String pointString = "POINT("+point.getX()+" "+point.getY()+")";
+        System.out.println(pointString);
+        return stationRepository.findAllByLineName(lineName, pointString, radius);
     }
 
     public Train getRealtimeTrainPosition(Long trainId) {
